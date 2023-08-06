@@ -1,35 +1,34 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {CounterButton} from "./CounterButton";
 import {CounterInput} from "./CounterInput";
+import c from '../counter.module.css'
 
-export const Counter = () => {
+export type CounterPropsType = {
+    value: number
+    increment: () => void
+    reset: () => void
+    error: string | null
+}
 
-
-   let [value, setValue] = useState(0)
-
-
-
-   const counterIncrement = () => {
-      setValue(++value)
-   }
-
-   const counterReset = () => {
-      setValue(0)
-   }
+export const Counter = (props: CounterPropsType) => {
 
 
-
-
-   return (
-     <div>
-        <div>
-           <CounterInput value={value} callback={()=>(value)}/>
-           <CounterButton name={'Inc'} callback={counterIncrement}/>
-           <CounterButton name={'Reset'} callback={counterReset}/>
-        </div>
-
-
-     </div>
-   );
+    return (
+        <>
+            <div className={c.counter}>
+                <div className={c.counter__wrapper}>
+                    <div className={c.counter__input}>
+                        <CounterInput value={props.value} callback={() => (props.value)}/>
+                        <div className={c.error}> {props.error &&
+                            <div className={c.error__text}>{props.error}</div>}</div>
+                    </div>
+                    <div className={c.counter__buttons}>
+                        <CounterButton name={'Inc'} callback={props.increment} error={props.error}/>
+                        <CounterButton name={'Reset'} callback={props.reset}/>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
 };
 

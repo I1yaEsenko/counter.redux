@@ -1,5 +1,78 @@
-.container{
+.container {
     width: 600px;
     margin: 60px auto;
     text-align: center;
+}
+
+/*Стилизация инпута*/
+
+.counter__input{
+    padding: 20px 30px;
+}
+
+/*Стилизация кнопки*/
+
+.counter__button {
+    cursor: pointer;
+    padding: 7px 20px;
+    margin: 0 5px;
+    border: 1px solid #c3c3c3;
+}
+
+.counter__button:hover {
+    background: #ccc;
+}
+
+/*Стилизация настроек*/
+.setCounter{
+    margin-top: 15px;
+}
+
+.setCounter__wrapper{}
+
+.setCounter__minMaxInputs{
+    display: inline-flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.setCounter__input{
+    margin-bottom: 12px;
+}
+
+.setCounter__buttonSet{}
+
+
+.setCounter__error{
+    height: 25px;
+    margin: 5px 0;
+}
+.setCounter__error_input{
+    color: red;
+    border: 1px solid red;
+    outline: 1px solid red;
+    border-radius: 2px;
+}
+.setCounter__error_text{
+    color:red;
+    font-size: 14px;
+    font-weight: bold;
+
+}
+
+/*Сообщение об ошибке*/
+.error{
+    min-height: 20px;
+}
+
+.error__text{
+    color:red;
+    font-size: 14px;
+}
+
+.counter__button_error {
+    padding: 7px 20px;
+    margin: 0 5px;
+    color: red;
+    border: 1px solid red;
 }
