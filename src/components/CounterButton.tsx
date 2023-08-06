@@ -5,7 +5,7 @@ type CounterButtonPropsType = {
     name: string
     callback: () => void
     error?: string | null
-    disable?: () => void
+    disable?: boolean
 }
 
 export const CounterButton = (props: CounterButtonPropsType) => {
@@ -18,7 +18,7 @@ export const CounterButton = (props: CounterButtonPropsType) => {
         <>
             <button className={props.error ? c.counter__button_error : c.counter__button}
                     onClick={onClickHandler}
-                    disabled={!!props.error}
+                    disabled={props.disable}
             >{props.name}</button>
         </>
     );

@@ -10,14 +10,14 @@ export type SetCounterPropsType = {
     maxValueSet: (value: number) => void
     counterHandler: () => void
     settingsError: string | null
+    changeView?: () => void
 }
 
 
 export const SetCounter = (props: SetCounterPropsType) => {
 
     const counterErrorClass = () =>
-       props.settingsError ? `${c.setCounter__error_input} + ${c.setCounter__input}` : c.setCounter__input
-
+        (props.settingsError ? `${c.setCounter__error_input} + ${c.setCounter__input}` : c.setCounter__input)
 
     return (
         <div className={c.setCounter}>
@@ -31,11 +31,19 @@ export const SetCounter = (props: SetCounterPropsType) => {
                                   className={counterErrorClass()}/>
                 </div>
                 <div className={c.setCounter__buttonSet}>
-                    <CounterButton name={'Set'} callback={props.counterHandler} />
+                    {props.changeView ? <CounterButton name={'Set'}
+                                                       callback={props.changeView}
+                                                       error={props.settingsError}
+                                                       disable={!!props.settingsError}/> :
+                        <CounterButton name={'Set'}
+                                       callback={props.counterHandler}
+                                       error={props.settingsError}
+                                        disable={!!props.settingsError}/>
+                    }
+
                 </div>
-                <div className={c.setCounter__error}>
-                    {props.settingsError && <div className={c.setCounter__error_text}>{props.settingsError}</div>}
-                </div>
+
+
             </div>
         </div>
     );

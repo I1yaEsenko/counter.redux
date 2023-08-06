@@ -9,23 +9,26 @@ function App() {
     let [maxValue, setMaxValue] = useState(5)
     let [value, setValue] = useState(minValue)
 
+    let [singleView, setSingleView] = useState<boolean>(true)
+
     let [error, setError] = useState<string | null>(null)
     let [settingsError, setSettingError] = useState<string | null>(null)
 
-    //  ошибка в поле настроек
-
+    let [message, setMessage] = useState<string | null>('Установите параметры счетчика')
     // увеличение счеткича
     const counterIncrement = () => {
         setValue(++value)
         if (value >= maxValue) {
-            setError('Предельное значение')
+            setError('Достигнуто максимальное значение')
         }
     }
     // сброс счетчика
     const counterReset = () => {
         setValue(minValue)
         setError(null)
+        setMessage(null)
     }
+
     // изменение минимального значения
     const setValueMin = (value: number) => {
         value < 0 || maxValue <= value ?
@@ -35,7 +38,7 @@ function App() {
     }
     // изменение максимального значение и проверка на ошибку
     const setValueMax = (value: number) => {
-        value <= minValue ?
+        value <= minValue || minValue < 0 ?
             setSettingError('Введите корректное значение') :
             setSettingError(null)
         setMaxValue(value)
@@ -44,15 +47,31 @@ function App() {
     const counterHandler = () => {
         setValue(minValue)
         setError(null)
+        setMessage(null)
     }
-    return (
 
+    // изменяем вид счетчика, заходим в настройки счетчика
+    const changeView = () => {
+        setSingleView(!singleView)
+    }
+
+    // выходим из настроек, устанавливаем начальное состояние счетчика
+    const settingsBack = () => {
+        setValue(minValue)
+        setSingleView(true)
+        setError(null)
+        setMessage(null)
+    }
+
+    return (
         <>
             <div className={c.container}>
                 <Counter value={value}
                          increment={counterIncrement}
                          reset={counterReset}
-                         error={error}/>
+                         error={error}
+                         settingsError={settingsError}
+                         message={message}/>
                 <SetCounter minValue={minValue}
                             maxValue={maxValue}
                             minValueSet={setValueMin}
@@ -60,7 +79,33 @@ function App() {
                             counterHandler={counterHandler}
                             settingsError={settingsError}
                 />
+                {singleView ?
+                    <div>
+                        <Counter value={value}
+                                 increment={counterIncrement}
+                                 reset={counterReset}
+                                 error={error}
+                                 changeView={changeView}
+                                 message={message}
+                        />
+                    </div>
+                    :
+
+                    <div>
+                        <SetCounter minValue={minValue}
+                                    maxValue={maxValue}
+                                    minValueSet={setValueMin}
+                                    maxValueSet={setValueMax}
+                                    counterHandler={counterHandler}
+                                    settingsError={settingsError}
+                                    changeView={settingsBack}
+                        />
+                    </div>
+                }
+
+
             </div>
+
 
         </>
     );
